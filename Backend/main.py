@@ -5,6 +5,7 @@ PolyDeal Growth Curve Prediction System
 """
 
 from pathlib import Path
+import os
 
 from dotenv import load_dotenv
 
@@ -47,9 +48,17 @@ app = FastAPI(
 )
 
 # Configure CORS
+# Configure CORS
+allowed_origins_env = os.environ.get("ALLOWED_ORIGINS")
+if allowed_origins_env:
+    # allow comma-separated values in ALLOWED_ORIGINS
+    allowed_origins = [o.strip() for o in allowed_origins_env.split(",") if o.strip()]
+else:
+    allowed_origins = ["*"]  # fallback permissive for development
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # In production, specify actual origins
+    allow_origins=allowed_origins,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -83,9 +92,11 @@ async def health_check():
 
 if __name__ == "__main__":
     import uvicorn
+    # Support environment-provided PORT (Render, Heroku, etc.)
+    port = int(os.environ.get("PORT", 8000))
     uvicorn.run(
         "main:app",
         host="0.0.0.0",
-        port=8000,
+        port=port,
         reload=True
     )

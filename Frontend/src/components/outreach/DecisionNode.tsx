@@ -1,4 +1,4 @@
-import { Handle, NodeProps, Position } from '@xyflow/react'
+import { Handle, Position } from '@xyflow/react'
 import { cn } from '@/lib/utils'
 import type { DecisionTreeNodeData } from './workflowLayout'
 
@@ -14,8 +14,8 @@ const statusDot: Record<DecisionTreeNodeData['status'], string> = {
   pending: 'bg-slate-400',
 }
 
-export default function DecisionNode({ data }: NodeProps<Record<string, unknown>>) {
-  const nodeData = data as DecisionTreeNodeData
+export default function DecisionNode(props: any) {
+  const nodeData = props.data as DecisionTreeNodeData
   return (
     <div
       className={cn(
