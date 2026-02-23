@@ -1,6 +1,6 @@
 /// <reference types="vite/client" />
 
-import axios from 'axios'
+import axios, { AxiosError } from 'axios'
 import type {
   Company,
   DashboardStats,
@@ -16,11 +16,34 @@ import type {
   BuyerOutreachData,
 } from '@/types'
 
-// In dev: use Vite proxy (/api) to avoid CORS. In prod: use env or fallback.
-const API_BASE_URL = import.meta.env.DEV
-  ? '/api'
-  : (import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000/api')
-const SUPABASE_FUNCTION_URL = import.meta.env.VITE_SUPABASE_FUNCTION_URL || 'https://bemxpoldmjcevaqmeuep.supabase.co/functions/v1'
+// Validate API URL configuration
+const getApiBaseUrl = (): string => {
+  if (import.meta.env.DEV) {
+    return '/api'
+  }
+  const prodUrl = import.meta.env.VITE_API_BASE_URL
+  if (!prodUrl) {
+    console.error('VITE_API_BASE_URL is not set. Please configure it in .env for production.')
+    throw new Error('API_BASE_URL is not configured')
+  }
+  return prodUrl
+}
+
+const API_BASE_URL = getApiBaseUrl()
+const SUPABASE_FUNCTION_URL = import.meta.env.VITE_SUPABASE_FUNCTION_URL || ''
+
+// Validate Supabase configuration
+const isSupabaseConfigured = (): boolean => {
+  return SUPABASE_FUNCTION_URL.trim().length > 0
+}
+
+// Helper function to safely extract data from API responses
+const extractData = <T>(response: any): T => {
+  if (!response?.data) {
+    throw new Error('Invalid API response: missing data field')
+  }
+  return response.data
+}
 
 const api = axios.create({
   baseURL: API_BASE_URL,
@@ -48,12 +71,17 @@ api.interceptors.request.use(
 // Response interceptor
 api.interceptors.response.use(
   (response) => response,
-  (error) => {
+  (error: AxiosError) => {
     if (error.response?.status === 401) {
-      // Handle unauthorized
+      // Handle unauthorized - clear token and redirect to login
       localStorage.removeItem('auth_token')
       window.location.href = '/login'
     }
+    console.error('API Error:', {
+      status: error.response?.status,
+      url: error.config?.url,
+      message: error.message,
+    })
     return Promise.reject(error)
   }
 )
@@ -61,8 +89,7 @@ api.interceptors.response.use(
 // Dashboard APIs
 export const getDashboardStats = async (): Promise<DashboardStats> => {
   const response = await api.get<ApiResponse<DashboardStats>>('/dashboard/stats')
-  return response.data.data
-}
+  return extractData<DashboardStats>(response.data)
 
 // Company APIs
 export const getCompanies = async (params?: {
@@ -115,21 +142,44 @@ export const generateContent = async (
   buyerId: string,
   type: 'linkedin' | 'email' | 'whatsapp'
 ): Promise<{ content: string }> => {
-  // Try to call the real Supabase Edge Function
+  // Try to call the real Supabase Edge Function if configured
+  if (isSupabaseConfigured()) {
+    try {
+      const supabaseClient = axios.create({
+        baseURL: SUPABASE_FUNCTION_URL,
+        timeout: 30000, // Longer timeout for AI generation
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      })
+      const response = await supabaseClient.post<{ content: string }>(
+        '/generate-content',
+        { buyer_id: buyerId, type }
+      )
+      if (response.data?.content) {
+        return response.data
+      }
+    } catch (error) {
+      console.warn('Supabase AI generation failed, falling back to backend:', error)
+      // Fall through to backend endpoint
+    }
+  } else {
+    console.warn('VITE_SUPABASE_FUNCTION_URL not configured, using backend fallback')
+  }
+
+  // Fallback to backend endpoint
   try {
-    const response = await axios.post<{ content: string }>(
-      `${SUPABASE_FUNCTION_URL}/generate-content`,
-      { buyer_id: buyerId, type },
-      { headers: { 'Content-Type': 'application/json' } }
-    )
-    return response.data
-  } catch (error) {
-    console.warn('Real AI generation failed, falling back to mock endpoint:', error)
     const response = await api.post<ApiResponse<{ content: string }>>(
-      `/content/generate`,
+      '/content/generate',
       { buyer_id: buyerId, type }
     )
-    return response.data.data
+    if (response.data?.data?.content) {
+      return response.data.data
+    }
+    throw new Error('Invalid response format from backend')
+  } catch (error) {
+    console.error('Content generation failed:', error)
+    throw error
   }
 }
 

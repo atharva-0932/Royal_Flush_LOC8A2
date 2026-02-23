@@ -1,283 +1,248 @@
-# PolyDeal - AI Outreach Intelligence Engine
+# Frontend - AI Outreach Intelligence Dashboard
 
-A production-grade, scalable frontend dashboard for PolyDeal's AI Outreach Intelligence Engine built with React, TypeScript, TailwindCSS, and shadcn/ui.
+React/TypeScript frontend application using Vite, providing real-time dashboards, analytics, and outreach management.
 
-## 🚀 Features
-
-### Pages & Functionality
-
-1. **Dashboard Overview**
-   - Executive summary with key metrics
-   - Intent distribution charts
-   - Channel effectiveness analysis
-   - Success rate trends
-   - Recent companies table
-
-2. **Companies**
-   - Advanced data table with search, filter, and sort
-   - Pagination support
-   - Click-through to detailed company view
-
-3. **Company Intelligence Detail**
-   - Intent score gauge chart
-   - Signal contribution analysis
-   - Multiple tabs: Intelligence Overview, Signals, AI Strategy, Generated Content
-   - Copy and send functionality for messages
-
-4. **Workflow Builder**
-   - Visual node-based workflow builder using React Flow
-   - Real-time workflow status
-   - Simulate workflow functionality
-   - Step-by-step workflow details
-
-5. **Content Generator**
-   - AI-powered content generation
-   - Generate LinkedIn, Email, and WhatsApp messages
-   - Copy, regenerate, and send functionality
-
-6. **Signal Monitor**
-   - Real-time signal feed
-   - Signal strength indicators
-   - Multi-source signal tracking (Hiring, LinkedIn, News, Engagement)
-
-7. **Conversations**
-   - WhatsApp-style chat UI
-   - Real-time messaging
-   - Conversation search
-   - Message status tracking
-
-8. **Analytics**
-   - Comprehensive performance metrics
-   - Multiple chart types
-   - Industry and signal performance analysis
-
-9. **Settings**
-   - Profile management
-   - Notification preferences
-   - API configuration
-   - Security settings
-
-## 🛠️ Tech Stack
-
-- **React 18** - Modern UI framework
-- **TypeScript** - Type-safe development
-- **TailwindCSS** - Utility-first CSS framework
-- **shadcn/ui** - High-quality component library
-- **React Query (TanStack Query)** - Data fetching and caching
-- **Zustand** - Lightweight state management
-- **Recharts** - Charting library
-- **React Flow** - Node-based workflow visualization
-- **Framer Motion** - Animation library
-- **Axios** - HTTP client
-- **React Router v6** - Routing solution
-- **Vite** - Build tool
-
-## 📦 Installation
-
-1. **Clone or navigate to the project directory**
+## Quick Start
 
 ```bash
-cd d:\ENGINEERING\Hackathon\LOC8\Frontend
-```
-
-2. **Install dependencies**
-
-```bash
+# Install dependencies
 npm install
-```
 
-3. **Start the development server**
-
-```bash
+# Development server
 npm run dev
+
+# Build for production
+npm run build
+
+# Preview production build
+npm run preview
 ```
 
-The application will be available at `http://localhost:3000`
+Access at `http://localhost:3000`
 
-## 🏗️ Project Structure
+## Project Structure
 
 ```
 Frontend/
 ├── src/
-│   ├── components/
-│   │   ├── ui/              # shadcn/ui components
-│   │   ├── layout/          # Layout components (Sidebar, Navbar)
-│   │   ├── charts/          # Reusable chart components
-│   │   └── cards/           # Card components
-│   ├── pages/               # Page components
-│   │   ├── Dashboard.tsx
-│   │   ├── Companies.tsx
-│   │   ├── CompanyDetail.tsx
-│   │   ├── Workflow.tsx
-│   │   ├── ContentGenerator.tsx
-│   │   ├── Signals.tsx
-│   │   ├── Conversations.tsx
-│   │   ├── Analytics.tsx
-│   │   └── Settings.tsx
-│   ├── services/
-│   │   ├── api.ts           # API service layer
-│   │   └── mockData.ts      # Mock data for development
-│   ├── store/               # Zustand state management
-│   ├── hooks/               # Custom React hooks
-│   │   └── useApi.ts        # API hooks with React Query
-│   ├── types/               # TypeScript type definitions
-│   ├── lib/                 # Utility functions
-│   ├── App.tsx              # Main app component
-│   ├── main.tsx             # Entry point
-│   └── index.css            # Global styles
-├── public/                  # Static assets
-├── index.html               # HTML template
-├── package.json             # Dependencies
-├── tsconfig.json            # TypeScript config
-├── tailwind.config.js       # Tailwind config
-├── vite.config.ts           # Vite config
-└── README.md                # This file
+│   ├── pages/              # Route pages
+│   │   ├── Dashboard.tsx   # Main dashboard
+│   │   ├── Analytics.tsx   # Analytics view
+│   │   ├── Companies.tsx   # Company management
+│   │   └── ...
+│   ├── components/         # Reusable components
+│   │   ├── dashboard/      # Dashboard components
+│   │   ├── charts/         # Chart components
+│   │   ├── analytics/      # Analytics components
+│   │   └── ui/             # UI primitives
+│   ├── services/           # API clients
+│   │   ├── api.ts          # Main API client
+│   │   └── mockData.ts     # Mock data for dev
+│   ├── contexts/           # React contexts
+│   │   └── AuthContext.tsx # Auth management
+│   ├── hooks/              # Custom hooks
+│   ├── types/              # TypeScript types
+│   ├── lib/                # Utilities
+│   ├── App.tsx             # Main component
+│   ├── main.tsx            # Entry point
+│   └── index.css           # Global styles
+├── public/                 # Static assets
+├── package.json
+├── vite.config.ts
+├── tsconfig.json
+└── tailwind.config.js
 ```
 
-## 🔌 API Integration
+## Key Features
 
-The application is configured to connect to a FastAPI backend at `http://localhost:8000/api`.
+- **Dashboard**: Real-time signal monitoring, company analytics, engagement metrics
+- **Analytics**: Multi-channel tracking, performance metrics, trend analysis
+- **Management**: Company database, buyer profiles, outreach campaigns
+- **Content Generation**: AI-powered message creation with multi-channel support
+- **Authentication**: Clerk integration for user management
+- **Real-time Data**: Supabase integration for live updates
 
-### API Endpoints
+## Technology Stack
 
-- `GET /api/dashboard/stats` - Dashboard statistics
-- `GET /api/companies` - List of companies
-- `GET /api/company/{id}` - Company details
-- `GET /api/signals` - Signal feed
-- `GET /api/workflow/{companyId}` - Workflow data
-- `POST /api/content/generate` - Generate content
-- `GET /api/conversations` - Conversations list
-- `POST /api/conversations/{id}/messages` - Send message
+- **React 18+** - UI framework
+- **TypeScript** - Type safety
+- **Vite** - Build tool (lightning fast)
+- **Tailwind CSS** - Styling
+- **Axios** - HTTP client
+- **React Router** - Navigation
+- **Clerk** - Authentication
+- **Supabase JS** - Database client
+- **Recharts** - Charts & visualization
 
-### Mock Data
+## Configuration
 
-The application includes comprehensive mock data for development and testing. To switch between mock and real API:
+### Environment Variables
 
-Edit `src/hooks/useApi.ts` and change:
-```typescript
-const USE_MOCK_DATA = false  // Change to false to use real API
+Create `.env` from `.env.example`:
+
+```bash
+# Authentication
+VITE_CLERK_PUBLISHABLE_KEY=your_clerk_key
+
+# API Configuration
+VITE_API_BASE_URL=http://localhost:8000/api      # Dev
+# VITE_API_BASE_URL=/api                          # Prod
+
+# Supabase Functions
+VITE_SUPABASE_FUNCTION_URL=your_function_url
+
+# Development
+VITE_USE_MOCK_DATA=false
 ```
 
-## 🎨 UI/UX Features
+For complete configuration, see [../ENV_SETUP.md](../ENV_SETUP.md)
 
-- **Dark Theme** - Professional dark mode by default
-- **Responsive Design** - Works on desktop, tablet, and laptop
-- **Animations** - Smooth page transitions and hover effects using Framer Motion
-- **Modular Components** - Reusable, well-structured components
-- **Type Safety** - Full TypeScript coverage
-- **Performance Optimized** - Lazy loading, memoization, and efficient rendering
+## Development
 
-## 🚀 Build for Production
+### Install & Run
+
+```bash
+npm install
+npm run dev
+```
+
+Features:
+- Hot module reload (HMR)
+- TypeScript compilation
+- Tailwind CSS processing
+- Fast refresh
+
+### Build
 
 ```bash
 npm run build
 ```
 
-The optimized production build will be in the `dist/` folder.
+Outputs optimized build to `dist/` directory.
 
-## 📝 Scripts
+### Code Quality
 
-- `npm run dev` - Start development server
-- `npm run build` - Build for production
-- `npm run preview` - Preview production build
-- `npm run lint` - Run ESLint
-
-## 🔧 Configuration
-
-### Environment Variables
-
-Create a `.env` file in the root directory:
-
-```env
-VITE_API_BASE_URL=http://localhost:8000/api
+```bash
+npm run lint
+npx tsc --noEmit
 ```
 
-### Proxy Configuration
+## API Integration
 
-The Vite config includes a proxy to forward `/api` requests to the backend:
+### Using API Client
 
 ```typescript
-server: {
-  port: 3000,
-  proxy: {
-    '/api': {
-      target: 'http://localhost:8000',
-      changeOrigin: true,
-    },
-  },
+import { api } from '@/services/api'
+
+// GET request
+const companies = await api.get('/companies')
+
+// POST request (auth token auto-added)
+const result = await api.post('/companies', data)
+```
+
+### Mock Data for Development
+
+Enable in `.env`:
+```bash
+VITE_USE_MOCK_DATA=true
+```
+
+## Authentication (Clerk)
+
+1. Get API key from https://clerk.com
+2. Add to `.env`: `VITE_CLERK_PUBLISHABLE_KEY=pk_live_xxxxx`
+3. Login is handled automatically in `src/main.tsx`
+
+Protected routes use `useAuth()` hook:
+```typescript
+import { useAuth } from '@clerk/clerk-react'
+
+function Component() {
+  const { isSignedIn } = useAuth()
+  return isSignedIn ? <Content /> : <SignIn />
 }
 ```
 
-## 🎯 Key Features
+## Routes
 
-### State Management
-- **React Query** for server state (API data)
-- **Zustand** for UI state (sidebar, filters, selections)
+| Route | Component | Auth Required |
+|-------|-----------|---------------|
+| `/` | LandingPage | No |
+| `/login` | Login | No |
+| `/dashboard` | Dashboard | Yes |
+| `/analytics` | Analytics | Yes |
+| `/companies` | Companies | Yes |
+| `/company/:id` | CompanyDetail | Yes |
+| `/conversations` | Conversations | Yes |
 
-### Performance
-- Lazy loading of pages
-- React.memo for expensive components
-- Pagination for large datasets
-- Debounced search
-- Optimized re-renders
+## Production Deployment
 
-### Code Quality
-- TypeScript for type safety
-- ESLint for code quality
-- Consistent code style
-- Modular architecture
-- Clean component structure
-
-## 🐛 Troubleshooting
-
-### Installation Issues
-If you encounter issues during installation:
+### Environment Setup
 
 ```bash
-# Clear npm cache
-npm cache clean --force
-
-# Delete node_modules and package-lock.json
-rm -rf node_modules package-lock.json
-
-# Reinstall
-npm install
+VITE_API_BASE_URL=/api              # Relative path
+VITE_CLERK_PUBLISHABLE_KEY=pk_live_ # Production key
+VITE_USE_MOCK_DATA=false            # Disable mocks
 ```
 
-### Build Issues
-If the build fails:
+### Build Size
 
-1. Check TypeScript errors: `npm run build -- --mode development`
-2. Verify all dependencies are installed
-3. Check for missing imports
+- Main bundle: ~1.3MB (minified)
+- CSS: ~68KB (gzipped)
 
-### Runtime Issues
-1. Verify the backend API is running
-2. Check browser console for errors
-3. Ensure correct API endpoint configuration
+### Docker Deployment
 
-## 📚 Documentation
+Deployed via Docker. See [../DOCKER.md](../DOCKER.md) for details.
 
-For more detailed information about specific components or features, refer to the inline comments in the source code.
+## Troubleshooting
 
-## 🤝 Contributing
+### Port Already in Use
+```bash
+npm run dev -- --port 3001
+```
 
-This is a production-ready codebase. When making changes:
+### API Not Connecting
+1. Check backend is running: `curl http://localhost:8000/docs`
+2. Verify `VITE_API_BASE_URL` in `.env`
+3. Check backend CORS settings
 
-1. Maintain TypeScript type safety
-2. Follow the existing code structure
-3. Add proper error handling
-4. Test all features thoroughly
-5. Update documentation as needed
+### Authentication Errors
+1. Verify `VITE_CLERK_PUBLISHABLE_KEY` in `.env`
+2. Confirm key in Clerk dashboard
+3. Clear browser cache: `localStorage.clear()`
 
-## 📄 License
+### Build Fails
+```bash
+rm -rf node_modules dist
+npm install
+npm run build
+```
 
-This project is part of PolyDeal's AI Outreach Intelligence Engine.
+## Performance Tips
 
-## 🔗 Related Projects
+- Use `React.lazy()` for route components
+- Compress images before adding
+- Bundle analysis: `npm run build -- --analyze`
+- Set cache headers in production
+- Use CDN for static assets in production
 
-- Backend: FastAPI backend service (to be integrated)
+## Dependencies
 
----
+See `package.json` for complete list. Key packages:
+- `react` - UI framework
+- `vite` - Build tool
+- `typescript` - Type safety
+- `tailwindcss` - Styling
+- `axios` - HTTP client
+- `@clerk/clerk-react` - Auth
+- `recharts` - Charts
+- `@supabase/supabase-js` - DB client
 
-Built with ❤️ using React, TypeScript, and modern web technologies.
+## Support
+
+For help with:
+- **Configuration**: [../ENV_SETUP.md](../ENV_SETUP.md)
+- **Docker**: [../DOCKER.md](../DOCKER.md)
+- **Backend API**: [../Backend/README.md](../Backend/README.md)
+- **Main Project**: [../README.md](../README.md)

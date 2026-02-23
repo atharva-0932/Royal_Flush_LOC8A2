@@ -13,7 +13,7 @@ services:
       - PYTHONDONTWRITEBYTECODE=1
       - DEBUG=false
     env_file:
-      - .env.prod
+      - .env
     networks:
       - loc8-network
     healthcheck:
