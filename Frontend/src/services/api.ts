@@ -90,6 +90,7 @@ api.interceptors.response.use(
 export const getDashboardStats = async (): Promise<DashboardStats> => {
   const response = await api.get<ApiResponse<DashboardStats>>('/dashboard/stats')
   return extractData<DashboardStats>(response.data)
+}
 
 // Company APIs
 export const getCompanies = async (params?: {

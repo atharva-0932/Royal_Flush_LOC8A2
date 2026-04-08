@@ -4,15 +4,16 @@
   "version": "1.0.0",
   "type": "module",
   "scripts": {
-    "dev": "concurrently \"vite\" \"cd ../Backend && python -m uvicorn main:app --reload --port 8000\" --names \"frontend,backend\"",
+    "dev": "concurrently \"vite\" \"cd ../Backend && python3 -m uvicorn main:app --reload --port 8000\" --names \"frontend,backend\"",
     "dev:frontend": "vite",
-    "dev:backend": "cd ../Backend && python -m uvicorn main:app --reload --port 8000",
+    "dev:backend": "cd ../Backend && python3 -m uvicorn main:app --reload --port 8000",
     "build": "tsc && vite build",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview"
   },
   "dependencies": {
     "@clerk/clerk-react": "^5.61.1",
+    "@clerk/nextjs": "^7.0.11",
     "@fullcalendar/daygrid": "^6.1.20",
     "@fullcalendar/interaction": "^6.1.20",
     "@fullcalendar/react": "^6.1.20",

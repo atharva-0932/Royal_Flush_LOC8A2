@@ -23,7 +23,34 @@ function ClerkProviderWithNavigate({ children }: { children: React.ReactNode }) 
   const clerkPubKey = (import.meta as any).env.VITE_CLERK_PUBLISHABLE_KEY
 
   if (!clerkPubKey) {
-    throw new Error('Missing VITE_CLERK_PUBLISHABLE_KEY')
+    return (
+      <div
+        style={{
+          minHeight: '100vh',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          padding: '24px',
+          fontFamily: 'Inter, system-ui, sans-serif',
+          background: '#0b0f19',
+          color: '#e6edf3',
+        }}
+      >
+        <div style={{ maxWidth: '720px', lineHeight: 1.6 }}>
+          <h1 style={{ fontSize: '22px', marginBottom: '10px' }}>Missing environment variable</h1>
+          <p style={{ marginBottom: '8px' }}>
+            <code>VITE_CLERK_PUBLISHABLE_KEY</code> is not set, so authentication cannot initialize.
+          </p>
+          <p style={{ marginBottom: '8px' }}>
+            Create <code>Frontend/.env</code> and add:
+          </p>
+          <pre style={{ background: '#111827', padding: '12px', borderRadius: '8px' }}>
+VITE_CLERK_PUBLISHABLE_KEY=pk_test_xxx_or_pk_live_xxx
+          </pre>
+          <p>Then restart the frontend dev server.</p>
+        </div>
+      </div>
+    )
   }
 
   return (
